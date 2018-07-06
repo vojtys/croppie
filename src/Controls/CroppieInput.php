@@ -62,12 +62,12 @@ class CroppieInput extends BaseControl
 			'class' => 'btn btn-primary btn-croppie mb-0',
 			'for' => $this->getHtmlId()
 		]);
-		$btn->add(Html::el('span')->setText($this->caption));
-		$btn->add($input);
+		$btn->addHtml(Html::el('span')->setText($this->caption));
+		$btn->addHtml($input);
 
-		$control->add($preview);
-		$control->add($btn);
-		$control->add($hidden);
+		$control->addHtml($preview);
+		$control->addHtml($btn);
+		$control->addHtml($hidden);
 
 		return $control;
 	}
