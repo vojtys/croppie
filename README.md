@@ -33,12 +33,8 @@ croppie:
 public function createComponentTestForm()
 {
     $form = new Nette\Application\UI\Form();
-    $form->addCroppie('image', t('Vybrat obrázek z počítače'));
-    $form->addHidden('width');
-    $form->addHidden('height');
-    $form->addHidden('error')->setDefaultValue(t('Nastala neočekávaná chyba'));
-    $form->addSubmit('ok', t('Nahrát obrázek'))->getControlPrototype()->class('upload-btn');
-    $form->onValidate[] = [$this, 'imageUploadValidation'];
+    $form->addCroppie('image', 'Vybrat obrázek z počítače');
+    $form->addSubmit('ok', 'Nahrát obrázek')->getControlPrototype()->class('upload-btn');
     $form->onSuccess[] = [$this, 'imageUploadProcess'];
     return $form;
 }
@@ -54,8 +50,8 @@ public function imageUploadProcess(Form $form, $values)
 ## CSS
 
 ```html
-<link rel="stylesheet" type="text/css" href="https://www.mydomain.com/vendor/vojtys/assets/css/croppie.css">
-<link rel="stylesheet" type="text/css" href="https://www.mydomain.com/vendor/vojtys/assets/css/vojtys.croppie.css">
+<link rel="stylesheet" type="text/css" href="./assets/css/croppie.css">
+<link rel="stylesheet" type="text/css" href="./assets/css/vojtys.croppie.css">
 ```
 
 ## JavaScript
@@ -63,8 +59,8 @@ public function imageUploadProcess(Form $form, $values)
 Before `</body>` element.
 
 ```html
-<script src='https://www.mydomain.com/vendor/vojtys/assets/js/croppie.js'></script>
-<script src='https://www.mydomain.com/vendor/vojtys/assets/js/vojtys.croppie.js'></script>
+<script src='./assets/js/croppie.js'></script>
+<script src='./assets/js/vojtys.croppie.js'></script>
 ```
 
 
