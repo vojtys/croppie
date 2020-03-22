@@ -9,6 +9,13 @@ Foliotek/Croppie control for Nette framework
 $ composer require vojtys/croppie
 ```
 
+# Versions
+
+| State  | Version  | Branch   | Nette  | PHP     |
+|--------|----------|----------|--------|---------|
+| stable | `v0.2`   | `master` | `3.0+` | `>=7.1` |
+| stable | `v0.1`   | `master` | `2.4`  | `>=5.6` |
+
 # Configuration
 
 ## NEON - add extension
@@ -20,22 +27,23 @@ extensions:
 croppie:
     width: 300
     height: 300
+    enableExif: true
+    type: square
+    size: original
 ```
 
 # Usage
 
-## Presenter/Control
 ```php
 
-/**
- * @return Nette\Application\UI\Form
- */
-public function createComponentTestForm()
+public function createComponentTestForm(): Form
 {
-    $form = new Nette\Application\UI\Form();
+    $form = new Form();
+
     $form->addCroppie('image', 'Vybrat obrázek z počítače');
     $form->addSubmit('ok', 'Nahrát obrázek')->getControlPrototype()->class('upload-btn');
     $form->onSuccess[] = [$this, 'imageUploadProcess'];
+
     return $form;
 }
 

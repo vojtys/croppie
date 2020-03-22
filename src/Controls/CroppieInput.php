@@ -10,17 +10,24 @@ use Nette\Utils\Html;
  */
 class CroppieInput extends BaseControl
 {
-	/** @var Configuration */
-	protected $configuration;
+	/** @var Configuration $configuration */
+	private $configuration;
+
+	/** @var string $inputClass */
+	private $inputClass = 'form-control';
+
+	/** @var string $labelClass */
+	private $labelClass = 'btn btn-primary btn-croppie mb-0';
 
 	/**
 	 * CroppieInput constructor.
-	 * @param null $caption
+	 * @param string|Object $caption
 	 * @param Configuration $configuration
 	 */
-	public function __construct($caption = NULL, Configuration $configuration)
+	public function __construct($caption, Configuration $configuration)
 	{
 		parent::__construct($caption);
+
 		$this->configuration = $configuration;
 	}
 
@@ -52,14 +59,14 @@ class CroppieInput extends BaseControl
 		]);
 		$input = Html::el('input');
 		$input->addAttributes([
-			'class' => 'croppie-upload-btn form-control',
+			'class' => $this->getInputClass(),
 			'type' => 'file',
 			'accept' => 'image/*',
 			'value' => $this->caption
 		]);
 		$btn = Html::el('label');
 		$btn->addAttributes([
-			'class' => 'btn btn-primary btn-croppie mb-0',
+			'class' => $this->getLabelClass(),
 			'for' => $this->getHtmlId()
 		]);
 		$btn->addHtml(Html::el('span')->setText($this->caption));
@@ -72,12 +79,35 @@ class CroppieInput extends BaseControl
 		return $control;
 	}
 
-	/**
-	 * @return mixed|null|Image
-	 */
-	public function getValue()
+	private function getLabelClass(): string
+	{
+		return 'btn-croppie ' . $this->labelClass;
+	}
+
+	public function setLabelClass(string $opt): void
+	{
+		$this->labelClass = $opt;
+	}
+
+	private function getInputClass(): string
+	{
+		return 'croppie-upload-btn ' . $this->inputClass;
+	}
+
+	public function setInputClass(string $opt): void
+	{
+		$this->inputClass = $opt;
+	}
+
+	public function setConfiguration(Configuration $configuration): void
+	{
+		$this->configuration = $configuration;
+	}
+
+	public function getValue():? Image
 	{
 		$image = new Image($this->value);
+
 		return $image->getValue();
 	}
 }

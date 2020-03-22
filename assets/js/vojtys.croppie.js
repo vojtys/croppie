@@ -1,4 +1,4 @@
-(function($, window, document, location, navigator) {
+(function($, window) {
 
     /* jshint laxbreak: true, expr: true */
     "use strict";
@@ -16,10 +16,11 @@
         console.error('Plugin "nette.ajax.js" is missing!.');
         return;
     } else if (window.FileReader === undefined) {
-        alert(t('Váš prohlížeč je zastaralý, aplikace nebude pracovat správně.'));
+        alert(t('Your browser is out of date. It does not support this plugin for cropping an image.'));
     }
 
     $.fn.vojtysFormsCroppie = function() {
+
         return this.each(function() {
             var $this = $(this);
             var settings = $.extend({}, $.fn.vojtysFormsCroppie.defaults, $this.data('settings'));
@@ -49,6 +50,7 @@
             Vojtys.Forms.Croppie.readFile(this, $preview);
         });
         Vojtys.Forms.Croppie.addEvents($preview);
+
         return $preview;
     };
 
@@ -176,5 +178,4 @@
     // return Objects
     return Vojtys;
 
-    // Immediately invoke function with default parameters
-})(jQuery, window, document, location, navigator);
+})(jQuery, window);

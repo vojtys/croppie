@@ -9,62 +9,40 @@ use Nette;
  */
 class Image
 {
-	/** @var array */
+	/** @var array $data */
 	protected $data;
 
-	/** @var Nette\Utils\Image */
+	/** @var Nette\Utils\Image $image */
 	protected $image;
 
-	/**
-	 * Image constructor.
-	 * @param $data
-	 */
-	public function __construct($data)
+
+	public function __construct(string $data)
 	{
 		$this->data = $this->jsonDecode($data);
 		$this->image = $this->createImage();
 	}
 
-	/**
-	 * @return null|Image
-	 */
-	public function getValue()
+	public function getValue():? Image
 	{
 		return empty($this->getNetteImage()) ? null : $this;
 	}
 
-	/**
-	 * @return Nette\Utils\Image
-	 */
-	public function getNetteImage()
+	public function getNetteImage():? Nette\Utils\Image
 	{
-		return $this->image;
+		return $this->image ?? null;
 	}
 
-	/**
-	 * @return null|string
-	 */
-	public function getName()
+	public function getName():? string
 	{
-		return isset($this->data['fileinfo']['name']) ?
-			$this->data['fileinfo']['name'] :
-			null;
+		return $this->data['fileinfo']['name'] ?? null;
 	}
 
-	/**
-	 * @return null|string
-	 */
-	public function getType()
+	public function getType():? string
 	{
-		return isset($this->data['fileinfo']['type']) ?
-			$this->data['fileinfo']['type'] :
-			null;
+		return $this->data['fileinfo']['type'] ?? null;
 	}
 
-	/**
-	 * @return null|Nette\Utils\Image
-	 */
-	private function createImage()
+	private function createImage():? Nette\Utils\Image
 	{
 		if (empty($this->data)) {
 			return null;
@@ -76,21 +54,19 @@ class Image
 			list(, $imageData) = explode(',', $imageData);
 			$image = Nette\Utils\Image::fromString(base64_decode($imageData));
 		} catch (Nette\Utils\ImageException $e) {
+
 			return null;
 		}
 
 		return $image;
 	}
 
-	/**
-	 * @param $rawData
-	 * @return array|null
-	 */
-	private function jsonDecode($rawData)
+	private function jsonDecode($rawData):? array
 	{
 		try {
 			$data = Nette\Utils\Json::decode($rawData, \Nette\Utils\Json::FORCE_ARRAY);
 		} catch (Nette\Utils\JsonException $e) {
+
 			return null;
 		}
 
